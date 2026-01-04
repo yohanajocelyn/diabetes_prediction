@@ -18,36 +18,43 @@ st.markdown(
 )
 
 with st.form("prediction_form"):
-    
-    st.header("Patient Information")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        # Gender Feature
-        gender_display = st.radio("Gender", ["Male", "Female"])
 
-        st.warning(
-            "⚠️ Polyuria and polydipsia are strong indicators of diabetes. "
-            "Please only select **Yes** if you are sure these symptoms are present."
-        )
-        
+    st.header("Patient Information")
+    st.divider()
+
+    st.subheader("Basic Information")
+    col_basic_1, col_basic_2 = st.columns(2)
+
+    with col_basic_1:
+        age = st.number_input("Age", min_value=1, max_value=120, value=30)
+
+    with col_basic_2:
+        gender_display = st.radio("Gender", ["Male", "Female"], horizontal=True)
+
+    st.divider()
+
+    st.subheader("Key Symptoms")
+
+    st.warning(
+        "⚠️ Polyuria and polydipsia are strong indicators of diabetes. "
+        "Please only select **Yes** if you are sure these symptoms are present."
+    )
+
+    col_symptom_1, col_symptom_2 = st.columns(2)
+
+    with col_symptom_1:
         polyuria = st.radio("Polyuria (Excessive urination)", ["Yes", "No"], horizontal=True)
         polydipsia = st.radio("Polydipsia (Excessive thirst)", ["Yes", "No"], horizontal=True)
-        weight_loss = st.radio("Sudden weight loss", ["Yes", "No"], horizontal=True)
-        weakness = st.radio("Weakness", ["Yes", "No"], horizontal=True)
-        polyphagia = st.radio("Polyphagia (Excessive hunger)", ["Yes", "No"], horizontal=True)
-        genital_thrush = st.radio("Genital Thrush", ["Yes", "No"], horizontal=True)
-        
-    with col2:
-        visual_blurring = st.radio("Visual Blurring", ["Yes", "No"], horizontal=True)
-        itching = st.radio("Itching", ["Yes", "No"], horizontal=True)
+        weight_loss = st.radio("Sudden Weight Loss", ["Yes", "No"], horizontal=True)
+
+    with col_symptom_2:
+        partial_paresis = st.radio("Partial Paresis (Weakness)", ["Yes", "No"], horizontal=True)
         irritability = st.radio("Irritability", ["Yes", "No"], horizontal=True)
         delayed_healing = st.radio("Delayed Healing", ["Yes", "No"], horizontal=True)
-        partial_paresis = st.radio("Partial Paresis", ["Yes", "No"], horizontal=True)
-        muscle_stiffness = st.radio("Muscle Stiffness", ["Yes", "No"], horizontal=True)
         alopecia = st.radio("Alopecia (Hair loss)", ["Yes", "No"], horizontal=True)
-        obesity = st.radio("Obesity", ["Yes", "No"], horizontal=True)
+        itching = st.radio("Itching", ["Yes", "No"], horizontal=True)
+
+    st.divider()
 
     submit_btn = st.form_submit_button("Get Prediction")
 
