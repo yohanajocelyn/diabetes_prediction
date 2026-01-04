@@ -65,21 +65,44 @@ if submit_btn:
         st.subheader("Prediction Result:")
         
         if prediction == 1:
-            # change the high risk to based on confidence
             st.error(f"The model predicts: **Positive**")
 
-            # give percentage confidence if available
+            # Calculate confidence
             if hasattr(model, "predict_proba"):
                 proba = model.predict_proba(input_data)[0][1]
                 st.write(f"Confidence: **{proba * 100:.2f}%**")
 
-            if proba < 0.2:
-                st.info("Note: The confidence level is low. It is recommended to monitor symptoms and consult a healthcare professional if they persist.")
-            elif proba < 0.5:
-                st.info("Note: The confidence level is moderate. Consider seeking medical advice for further evaluation.")
-            else:
-                st.info("Note: The confidence level is high. It is strongly recommended to consult a healthcare professional for a comprehensive diagnosis.")
-            st.warning("This prediction is not definitive. Please seek professional medical advice for accurate diagnosis.")
+                # Confidence context logic
+                if proba < 0.2:
+                    st.info("Note: The confidence level is low. It is recommended to monitor symptoms.")
+                elif proba < 0.5:
+                    st.info("Note: The confidence level is moderate. Consider seeking medical advice.")
+                else:
+                    st.info("Note: The confidence level is high. It is strongly recommended to consult a healthcare professional.")
+            
+            st.warning("This prediction is not definitive. Please seek professional medical advice.")
+
+            # --- 🏥 ADDED: MITRA KELUARGA ADVICE SECTION ---
+            st.write("") # Spacer
+            with st.expander("📋 Recommended Next Steps (Based on Mitra Keluarga Guidelines)", expanded=True):
+                st.markdown("""
+                **1. 🩺 Consult a Doctor (Priority)**
+                * Do not self-diagnose based on this app. Visit an Internist or Endocrinologist for lab tests (HbA1c, Fasting Blood Sugar).
+                
+                **2. 🥗 Adjust Your Diet**
+                * **Swap:** White rice for brown rice, oatmeal, or whole wheat.
+                * **Cook:** Boil, steam, or grill instead of frying.
+                * **Limit:** Sugar, salt, and saturated fats.
+                
+                **3. 🏃‍♂️ Stay Active**
+                * Aim for **10-30 mins** of aerobic exercise daily (walking, cycling).
+                * *Safety:* Do not exercise if blood sugar >200 mg/dl.
+                
+                **4. 📉 Monitor & Manage**
+                * Check blood sugar regularly.
+                * Manage stress levels to prevent hormonal sugar spikes.
+                """)
+            # -----------------------------------------------
 
         else:
             st.success(f"The model predicts: **Negative**")
@@ -87,8 +110,8 @@ if submit_btn:
                 proba = model.predict_proba(input_data)[0][0]
                 st.write(f"Confidence: **{proba * 100:.2f}%**")
             
-            st.info("The model indicates a low risk based on the provided symptoms. However, if symptoms persist or worsen, please consult a healthcare professional.")
-            st.warning("This prediction is not definitive. Please seek professional medical advice for accurate diagnosis.")
+            st.info("The model indicates a low risk based on the provided symptoms. However, if symptoms persist, please consult a professional.")
+            st.warning("This prediction is not definitive. Please seek professional medical advice.")
             
     except Exception as e:
         st.error(f"An error occurred during prediction: {e}")
