@@ -3,10 +3,23 @@ import pickle
 import numpy as np
 import pandas as pd
 
+<<<<<<< Updated upstream
 st.set_page_config(page_title="Health Prediction App", layout="centered")
+=======
+with open('rf_model.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
 
-st.title("🏥 Health Risk Classification App")
-st.write("Please select the values for the symptoms below to get a prediction.")
+st.set_page_config(page_title="Early Diabetes Risk Prediction", layout="centered")
+>>>>>>> Stashed changes
+
+st.title("🏥 Early Diabetes Risk Classification")
+st.write("Please select the values for the symptoms below to get a prediction of your risk of prediabetes.")
+st.markdown(
+    """
+    **Dataset source:**  
+    Dataset acquired from the [Early Stage Diabetes Risk Prediction Dataset](https://www.kaggle.com/datasets/ishandutta/early-stage-diabetes-risk-prediction-dataset) on Kaggle.
+    """
+)
 
 with st.form("prediction_form"):
     
@@ -17,6 +30,14 @@ with st.form("prediction_form"):
     with col1:
         # Gender Feature
         gender_display = st.radio("Gender", ["Male", "Female"])
+<<<<<<< Updated upstream
+=======
+
+        st.warning(
+            "⚠️ Polyuria and polydipsia are strong indicators of diabetes. "
+            "Please only select **Yes** if you are sure these symptoms are present."
+        )
+>>>>>>> Stashed changes
         
         polyuria = st.radio("Polyuria (Excessive urination)", ["Yes", "No"], horizontal=True)
         polydipsia = st.radio("Polydipsia (Excessive thirst)", ["Yes", "No"], horizontal=True)
